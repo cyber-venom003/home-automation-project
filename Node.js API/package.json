@@ -1,0 +1,22 @@
+{
+  "name": "node.js-api",
+  "version": "1.0.0",
+  "description": "A Node.JS API that returns JSON data from Google Firebase's Cloud Firestore for controlling NodeMCU.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyber-venom003/warehouse-automation-project.git"
+  },
+  "author": "Tejas Agrawal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyber-venom003/warehouse-automation-project/issues"
+  },
+  "homepage": "https://github.com/cyber-venom003/warehouse-automation-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
