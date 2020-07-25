@@ -1,10 +1,11 @@
 var express = require('express');
 var app = express();
+var morgan = require('morgan');
+app.use(morgan('combined'));
 
 var sampleJSON = {
-    name: 'Tejas Agrawal',
-    field: 'ECE',
-    
+    deviceName: 'led',
+    status: false, 
 }
 
 app.get('/' , (req , res) => {

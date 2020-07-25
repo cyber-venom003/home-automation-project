@@ -1,30 +1,41 @@
 #include <ArduinoJson.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266HTTPClient.h>
 
-const size_t capacity = JSON_OBJECT_SIZE(2) + 40;
-DynamicJsonDocument doc(capacity);
+#include <FirebaseArduino.h>
+#include <ESP8266WiFi.h>
+
+#define WIFI_SSID "sonji"
+#define WIFI_PASSWORD "OngBak$3118"
+
+#define FIREBASE_HOST "warehouse-automation-2aa73.firebaseio.com"
+#define FIREBASE_AUTH "Dhq2rvNkXNXQKPVn1N8JBG3HUColzV96fkb6UIHg"
 
 void setup() {
-  Serial.begin(115200);
-  WiFi.begin("sonji", "OngBak$3118");
-  while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
-    delay(500);
-    Serial.println("Waiting for connection");
-  }
+ WiFi.begin(WIFI_SSID , WIFI_PASSWORD);
+ Serial.begin(115200);
+ Serial.print("Connecting");
+ while (WiFi.status() != WL_CONNECTED){
+  Serial.print(".");
+  delay(500); 
+ }
+ Serial.println();
+ Serial.print("connected:");
+ Serial.println(WiFi.localIP());
+ Firebase.begin(FIREBASE_HOST , FIREBASE_AUTH);
+ pinMode(4 , OUTPUT);
 }
 
 void loop() {
-  if(WiFi.status() == WL_CONNECTED){
-    HTTPClient http;
-    http.begin("http://192.168.43.253:3000/");
-    int status_code = http.GET();
-    String response = http.getString();
-    Serial.println(status_code);
-//    Serial.println(response);
-    deserializeJson(doc, response);
-    Serial.println(doc["name"].as<String>());
-    http.end();
+  delay(1000);
+  Firebase.stream("device1");
+  delay(1000);
+  if(Firebase.available()){
+    int i = Firebase.getInt("device1");
+    Serial.println(i);
+    switch(i){
+      case 1: digitalWrite(4 , HIGH);
+        break;
+      case 2: digitalWrite(4 , LOW);
+        break;
+    }
   }
-  delay(10000);
 }

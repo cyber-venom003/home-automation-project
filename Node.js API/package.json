@@ -18,5 +18,8 @@
   "homepage": "https://github.com/cyber-venom003/warehouse-automation-project#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
   }
 }
