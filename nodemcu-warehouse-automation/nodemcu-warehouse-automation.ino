@@ -1,5 +1,4 @@
-#include <ArduinoJson.h>
-
+//#include <ArduinoJson.h>
 #include <FirebaseArduino.h>
 #include <ESP8266WiFi.h>
 
@@ -21,21 +20,36 @@ void setup() {
  Serial.print("connected:");
  Serial.println(WiFi.localIP());
  Firebase.begin(FIREBASE_HOST , FIREBASE_AUTH);
- pinMode(4 , OUTPUT);
+ pinMode(15 , OUTPUT);
+ pinMode(13 , OUTPUT);
+ pinMode(12 , OUTPUT);
 }
 
 void loop() {
   delay(1000);
-  Firebase.stream("device1");
+  Firebase.stream("devices");
   delay(1000);
   if(Firebase.available()){
-    int i = Firebase.getInt("device1");
-    Serial.println(i);
-    switch(i){
-      case 1: digitalWrite(4 , HIGH);
+    int d1Status = Firebase.getInt("devices/device1");
+    deviceControl(d1Status , 15);
+    int d2Status = Firebase.getInt("devices/device2");
+    deviceControl(d2Status , 13);
+    int d3Status = Firebase.getInt("devices/device3");
+    deviceControl(d3Status , 12);
+    Serial.print("Device 1 Status: ");
+    Serial.println(d1Status);
+    Serial.print("Device 2 Status: ");
+    Serial.println(d2Status);
+    Serial.print("Device 3 Status: ");
+    Serial.println(d3Status);
+  }
+}
+
+void deviceControl(int stat , int devicePin){
+  switch(stat){
+      case 0: digitalWrite(devicePin , LOW);
         break;
-      case 2: digitalWrite(4 , LOW);
+      case 1: digitalWrite(devicePin , HIGH);
         break;
     }
-  }
 }
