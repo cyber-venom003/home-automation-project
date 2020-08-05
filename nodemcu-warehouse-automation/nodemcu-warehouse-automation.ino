@@ -10,7 +10,7 @@
 
 void setup() {
  WiFi.begin(WIFI_SSID , WIFI_PASSWORD);
- Serial.begin(115200);
+ Serial.begin(9600);
  Serial.print("Connecting");
  while (WiFi.status() != WL_CONNECTED){
   Serial.print(".");
@@ -30,11 +30,11 @@ void loop() {
   Firebase.stream("devices");
   delay(1000);
   if(Firebase.available()){
-    int d1Status = Firebase.getInt("devices/device1");
+    boolean d1Status = Firebase.getBool("devices/device1");
     deviceControl(d1Status , 15);
-    int d2Status = Firebase.getInt("devices/device2");
+    boolean d2Status = Firebase.getBool("devices/device2");
     deviceControl(d2Status , 13);
-    int d3Status = Firebase.getInt("devices/device3");
+    boolean d3Status = Firebase.getBool("devices/device3");
     deviceControl(d3Status , 12);
     Serial.print("Device 1 Status: ");
     Serial.println(d1Status);
@@ -45,7 +45,7 @@ void loop() {
   }
 }
 
-void deviceControl(int stat , int devicePin){
+void deviceControl(boolean stat , int devicePin){
   switch(stat){
       case 0: digitalWrite(devicePin , LOW);
         break;
