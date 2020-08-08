@@ -3,8 +3,8 @@
 An IoT project prototype for automating the control of home using NodeMCU.
 
 #### Uploaded code right now supports: 
-  -[x] Appliance Control Using 4 channel SPDT Relay Module
-  -[x] Secured Access of Appliances using EM-18 RFID Access control
+  * -[x] Appliance Control Using 4 channel SPDT Relay Module
+  * -[x] Secured Access of Appliances using EM-18 RFID Access control
 
 ## Working Algorithm
 >NodeMCU constantly reads the Firebase Realtime Database in every 2 seconds.
